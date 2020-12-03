@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Добавление товара в список</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <meta charset="UTF-8"/>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<style>
+    .new_element{
+        margin-top: 30px;
+        padding-left: 1px;
+    }
+</style>
+
+<body>
+    <div id="prodAdd" style="padding-left: 30px; padding-top: 10px">
+        <a href="/"><button>Вернуться к списку товаров</button></a>
+        <p id="add-item" style="margin-top: 5px">Добавить новый товар</p>
+
+            <form action="/add/confirm" method="post" enctype="multipart/form-data">
+                <p><input type="text" placeholder="Наизвание товара" name="name" id="name" th:required="required"/></p>
+                <p><input type="number" placeholder="Количество" name="price" id="price" max="2147483647" th:required="required"/></p>
+
+                <p><button type="submit" id="submit">Добавить</button></p>
+
+            </form>
+
+
+    </div>
+
+
+</body>
+</html>

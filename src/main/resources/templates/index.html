@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Список товаров</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <meta charset="UTF-8"/>
+    <link type="text/css" href="static/css/index.css" th:href="@{static/css/index.css}" rel="stylesheet" />
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+
+
+<style>
+.content{
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+.item{
+    border: 2px solid black;
+    width: 700px;
+    display: flex;
+    align-self: center;
+    flex-direction: column;
+    align-content: center;
+    margin-top: 30px;
+}
+.item_data{
+    padding-top: 10px;
+    padding-left: 15px;
+}
+
+.add-button{
+    text-align: center;
+}
+
+</style>
+
+
+
+<body>
+<div class="add-button">
+    <a href="/add" target="_self" style="float: left; margin: 10px"> <button>Добавить товар</button></a>
+</div>
+
+        <div>
+            <a class="cart" href="/cart" style="float: right; margin: 10px">
+                <button>
+                    Купленные товары
+                </button>  
+            </a>
+        </div>
+
+    <div style="text-align: center;"><h1> Список товаров</h1></div>
+
+
+    <div class="content" id="item-list">
+
+        <div  th:id="${item.getName()} + -item" th:each="item : ${items}">
+            <div class="item">
+                <form action="/" method="get">
+                    <p class="item_data"  th:text="'Название: ' + ${item.getName()}" ></p>
+                    <p class="item_data" th:text="'Количество:' + ${item.getCount()}"></p>
+                </form>
+                <button style="background-color: grey; border-color: black" class="btn btn-sm add-in-cart-btn" th:id="${item.getId()}" th:attr="data-item-id=${item.getId()}">Переместить товар в список купленных</button>
+                <button style="background-color: grey; border-color: black" class="btn btn-sm delete-btn" th:id="${item.getId()}" th:attr="data-item-id=${item.getId()}" > Удалить товар из списка </button>
+
+                
+            </div>
+
+        </div>
+    </div>
+
+
+
+
+
+        <script>
+            $(".add-in-cart-btn").click((e) => {
+                var btn = $(e.currentTarget);
+                var itemId = btn.attr("data-item-id");
+                btn.css({
+                'color': 'grey'
+                    });
+
+                btn.attr("disabled", "disabled");
+                $.post("/add/" + itemId + "/cart", () => {
+                });
+            });
+
+                $(".delete-btn").click((e) => {
+                var btn = $(e.currentTarget);
+                var itemId = btn.attr("data-item-id");
+                btn.attr("disabled", "disabled");
+
+                $.post("/item/" + itemId + "/delete", () => {
+
+                });
+            });
+
+ 
+        </script>
+
+
+</body>
+
+</html>
